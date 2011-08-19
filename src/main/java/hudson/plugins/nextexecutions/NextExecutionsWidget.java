@@ -30,25 +30,8 @@ public class NextExecutionsWidget extends Widget {
 	public List<NextBuilds> getBuilds() {		
 		List<NextBuilds> nblist = new Vector<NextBuilds>();
 
-		List<AbstractProject> l;
-		
-		View v = Stapler.getCurrentRequest().findAncestorObject(View.class);
-		
-		if(v != null) {
-			Collection<TopLevelItem> tli = v.getItems();
-			Vector<AbstractProject> vector = new Vector<AbstractProject>();
-			for (TopLevelItem topLevelItem : tli) {
-				if(topLevelItem instanceof AbstractProject){
-					vector.add((AbstractProject)topLevelItem);
-				}
-			}
-			l = vector;
-		}
-		else{
-			l = Hudson.getInstance().getItems(AbstractProject.class); 
-		}
+		List<AbstractProject>	l = Hudson.getInstance().getItems(AbstractProject.class); 
 			
-		
 		for (AbstractProject project: l) {
 			NextBuilds nb = NextExecutionsUtils.getNextBuild(project);
 			if(nb != null)
@@ -56,8 +39,5 @@ public class NextExecutionsWidget extends Widget {
 		}
 		Collections.sort(nblist);
 		return nblist;
-		
 	}
-	
-
 }
